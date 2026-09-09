@@ -13,7 +13,7 @@ services:
       - key: JWT_SECRET_KEY
         generateValue: true
       - key: CORS_ORIGINS
-        value: https://ndb-assistant-web.onrender.com
+        value: https://ndb-assistant-frontend.onrender.com
       - key: DATABASE_URL
         value: sqlite:///./bank_assistant.db
       - key: SEED_DEMO
