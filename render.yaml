@@ -14,8 +14,17 @@ services:
       - key: JWT_SECRET_KEY
         generateValue: true
       - key: CORS_ORIGINS
-        sync: false
+        value: https://ndb-assistant-web.onrender.com
       - key: DATABASE_URL
         value: sqlite:///./bank_assistant.db
       - key: SEED_DEMO
         value: "false"
+  - type: web
+    name: ndb-assistant-web
+    runtime: static
+    plan: free
+    buildCommand: cd frontend && npm ci && npm run build
+    staticPublishPath: frontend/dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://ndb-assistant-api.onrender.com
