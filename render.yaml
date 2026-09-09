@@ -17,7 +17,7 @@ services:
       - key: DATABASE_URL
         value: sqlite:///./bank_assistant.db
       - key: SEED_DEMO
-        value: "false"
+        value: "true"
   - type: web
     name: ndb-assistant-web
     runtime: static
