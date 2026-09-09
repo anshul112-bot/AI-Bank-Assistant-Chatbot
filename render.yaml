@@ -18,9 +18,8 @@ services:
         value: sqlite:///./bank_assistant.db
       - key: SEED_DEMO
         value: "false"
-  - type: web
+  - type: static_site
     name: ndb-assistant-web
-    runtime: static
     buildCommand: cd frontend && npm ci && npm run build
     staticPublishPath: frontend/dist
     envVars:
