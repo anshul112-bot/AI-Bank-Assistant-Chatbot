@@ -26,3 +26,5 @@ Thumbs.db
 
 # Local duplicate workspace copy
 /backend - Copy/
+/backend/.venv - Copy/
+/backend/* - Copy.py
