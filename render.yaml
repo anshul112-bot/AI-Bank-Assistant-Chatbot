@@ -9,6 +9,8 @@ services:
     envVars:
       - key: ENVIRONMENT
         value: production
+      - key: PYTHON_VERSION
+        value: 3.12.8
       - key: JWT_SECRET_KEY
         generateValue: true
       - key: CORS_ORIGINS
