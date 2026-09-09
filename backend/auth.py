@@ -1,3 +1,4 @@
+import os
 from datetime import datetime, timedelta, timezone
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
@@ -7,7 +8,9 @@ from sqlalchemy.orm import Session
 from database import get_db
 from models import User
 
-SECRET_KEY = "change-this-demo-secret-before-production"
+SECRET_KEY = os.getenv("JWT_SECRET_KEY", "local-development-secret-change-me")
+if SECRET_KEY == "local-development-secret-change-me" and os.getenv("ENVIRONMENT", "development") == "production":
+    raise RuntimeError("JWT_SECRET_KEY must be set in production")
 ALGORITHM = "HS256"
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")

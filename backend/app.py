@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -9,7 +10,8 @@ from database import Base, SessionLocal, engine, get_db
 from models import ChatMessage, Transaction, User
 
 app = FastAPI(title="National Digital Bank API", version="1.0.0")
-app.add_middleware(CORSMiddleware, allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
+allowed_origins = [origin.strip() for origin in os.getenv("CORS_ORIGINS", "http://localhost:5173,http://127.0.0.1:5173").split(",") if origin.strip()]
+app.add_middleware(CORSMiddleware, allow_origins=allowed_origins, allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 Base.metadata.create_all(bind=engine)
 
 class Credentials(BaseModel):
@@ -23,6 +25,8 @@ def public_user(user):
 
 @app.on_event("startup")
 def seed():
+    if os.getenv("SEED_DEMO", "false").lower() != "true":
+        return
     db = SessionLocal()
     try:
         if not db.query(User).filter_by(email="demo@ndb.com").first():
